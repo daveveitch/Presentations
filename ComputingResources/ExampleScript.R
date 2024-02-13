@@ -74,13 +74,13 @@ ex_simulation<-function(job_num,results_dir,working_dir){
  
   if(job_num=='ALL'){
     start_seed=999
-  }else{stat_seed=job_num}
+  }else{start_seed=job_num}
   
   cl <- parallel::makeCluster(ncores,outfile="")
   doParallel::registerDoParallel(cl)
   
   experiment_results=foreach(i=1:10, .packages = c('Matrix'),.combine='rbind')%dopar%{
-                               set.seed(i+job_num)
+                               set.seed(i+start_seed)
                                setwd(working_dir)
                                source('ExampleHelper.R')
                                x=sim_normal_rv(1,5)
